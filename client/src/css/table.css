@@ -1,0 +1,23 @@
+.header{
+    background-color: #374A67;
+    color: white;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+  }
+
+  .active {
+    color: #688B41;
+    font-weight: 500;
+  } 
+  
+   .inactive {
+    color: #E4572E;
+    font-weight: 500;
+  }
+  

@@ -1,0 +1,56 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+import Table from '../components/Table'
+
+describe('Table', () => {
+  const testData = [{"id":1,"name":"Divavu","startDate":"9/19/2017","endDate":"3/9/2018","Budget":88377},
+  {"id":2,"name":"Jaxspan","startDate":"11/21/2017","endDate":"2/21/2018",
+  "Budget":608715},
+  {"id":3,"name":"Miboo","startDate":"11/1/2017","endDate":"6/20/2017","Budget":239507},
+  {"id":4,"name":"Trilith","startDate":"8/25/2017","endDate":"11/30/2017",
+  "Budget":179838},
+  {"id":5,"name":"Layo","startDate":"11/28/2017","endDate":"3/10/2018","Budget":837850},
+  {"id":6,"name":"Photojam","startDate":"7/25/2017","endDate":"6/23/2017",
+  "Budget":858131},
+  {"id":7,"name":"Blogtag","startDate":"6/27/2017","endDate":"1/15/2018","Budget":109078},
+  {"id":8,"name":"Rhyzio","startDate":"10/13/2017","endDate":"1/25/2018","Budget":272552},
+  {"id":9,"name":"Zoomcast","startDate":"9/6/2017","endDate":"11/10/2017",
+  "Budget":301919},
+  {"id":10,"name":"Realbridge","startDate":"3/5/2018","endDate":"10/2/2017","Budget":505602},
+  {"id":11,"name":"New","startDate":"05/2/2023","endDate":"06/30/2023","Budget":505602}
+  ]
+
+  it('renders without errors', () => {
+    render(<Table data={testData} />);
+  });
+
+  it('displays table headers correctly', () => {
+    const { getByText } = render(<Table data={testData} />);
+    expect(getByText('Name')).toBeTruthy();
+    expect(getByText('Start Date')).toBeTruthy();
+    expect(getByText('End Date')).toBeTruthy();
+    expect(getByText('Budget')).toBeTruthy();
+    expect(getByText('Status')).toBeTruthy();
+  });
+
+  it('displays data rows correctly', () => {
+    const { getByText } = render(<Table data={testData} />);
+    testData.forEach((campaign) => {
+      expect(getByText(campaign.name)).toBeTruthy();
+      expect(getByText(campaign.startDate)).toBeTruthy();
+      expect(getByText(campaign.endDate)).toBeTruthy();
+    });
+  });
+
+  it('displays "Active" status correctly for campaigns with end dates greater than or equal to today', () => {
+    const { getAllByText } = render(<Table data={testData} />);
+    const activeStatuses = getAllByText('Active');
+    expect(activeStatuses.length).toBeGreaterThan(0);
+  });
+
+  it('displays "Inactive" status correctly for campaigns with end dates earlier than today', () => {
+    const { getAllByText } = render(<Table data={testData} />);
+    const inactiveStatuses = getAllByText('Inactive');
+    expect(inactiveStatuses.length).toBeGreaterThan(0);
+  });
+});
